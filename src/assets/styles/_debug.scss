@@ -1,3 +1,5 @@
+@use "./mixins" as *;
+
 .b1 {
   background: red;
   border: 1px solid red;
@@ -16,4 +18,22 @@
 .b4 {
   background: purple;
   border: 1px solid purple;
+}
+
+.rb {
+  @include xs {
+    border: 2px solid red;
+  }
+  @include sm {
+    border: 2px solid purple;
+  }
+  @include md {
+    border: 2px solid blue;
+  }
+  @include lg {
+    border: 2px solid green;
+  }
+  @include xl {
+    border: 2px solid orangered;
+  }
 }

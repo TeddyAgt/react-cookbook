@@ -1,11 +1,25 @@
+@use "../assets/styles/mixins" as *;
+
 .grid {
   display: grid;
   place-content: center;
   grid-template-columns: repeat(3, 350px);
   grid-auto-columns: repeat(3, 350px);
   gap: 20px;
+
+  @include lg-lt {
+    grid-template-columns: repeat(2, 350px);
+  }
+
+  @include md-lt {
+    grid-template-columns: 350px;
+  }
+
+  @include xs {
+    grid-template-columns: 1fr;
+  }
 }
 
 .contentCard {
-  width: 1130px;
+  max-width: 1130px;
 }

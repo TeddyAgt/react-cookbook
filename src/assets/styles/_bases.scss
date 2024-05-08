@@ -27,3 +27,12 @@ img {
 button {
   cursor: pointer;
 }
+
+input,
+textarea {
+  font-family: var(--ff-main);
+}
+
+::placeholder {
+  font-family: var(--ff-main);
+}

@@ -8,6 +8,7 @@ function Homepage() {
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState("");
+  const [pageIndex, setPageIndex] = useState(0);
   const BASE_API_URL = useContext(ApiContext);
 
   useEffect(() => {
@@ -17,14 +18,21 @@ function Homepage() {
       setIsLoading(true);
 
       try {
-        const response = await fetch(BASE_API_URL);
+        console.log("fetch");
+        const response = await fetch(
+          `${BASE_API_URL}?skip=${pageIndex * 18}&limit=18`
+        );
 
         if (response.ok && !cancel) {
-          const recipes = await response.json();
+          const newRecipes = await response.json();
 
-          setRecipes(Array.isArray(recipes) ? recipes : [recipes]);
+          setRecipes((x) => {
+            return Array.isArray(newRecipes)
+              ? [...x, ...newRecipes]
+              : [...x, newRecipes];
+          });
         } else {
-          console.log("Erreur");
+          console.log("Error, or cancel ===", cancel);
         }
       } catch (e) {
         console.log(e);
@@ -36,7 +44,13 @@ function Homepage() {
     return () => {
       cancel = true;
     };
-  }, [BASE_API_URL]);
+  }, [BASE_API_URL, pageIndex]);
+
+  function updateRecipe(recipeToUpdate) {
+    setRecipes(
+      recipes.map((r) => (r._id === recipeToUpdate._id ? recipeToUpdate : r))
+    );
+  }
 
   function handleInputSearch(e) {
     const filter = e.target.value;
@@ -45,7 +59,10 @@ function Homepage() {
 
   return (
     <main className={`flex-fill container p-20 d-flex flex-column`}>
-      <h1 className="my-30">Découvrez nos nouvelles recettes</h1>
+      <h1 className="my-30">
+        Découvrez nos nouvelles recettes{" "}
+        <small className="styles.small"> - {recipes.length}</small>
+      </h1>
 
       <section
         className={`${styles.contentCard} flex-fill mb-20 card p-20 d-flex flex-column`}>
@@ -59,7 +76,7 @@ function Homepage() {
             className="flex-fill"
           />
         </div>
-        {isLoading ? (
+        {isLoading && !recipes.length ? (
           <Loading />
         ) : (
           <div className={styles.grid}>
@@ -68,12 +85,19 @@ function Homepage() {
               .map((recipe) => (
                 <Recipe
                   key={recipe._id}
-                  title={recipe.title}
-                  image={recipe.image}
+                  recipe={recipe}
+                  toggleRecipeLike={updateRecipe}
                 />
               ))}
           </div>
         )}
+        <div className="d-flex justify-content-center align-items-center p-20">
+          <button
+            onClick={() => setPageIndex(pageIndex + 1)}
+            className="btn btn--primary">
+            Charger plus de recettes
+          </button>
+        </div>
       </section>
     </main>
   );

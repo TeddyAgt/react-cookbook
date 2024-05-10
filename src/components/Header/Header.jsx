@@ -1,7 +1,7 @@
 import styles from "./Header.module.scss";
-import logo from "../assets/images/cookchef.png";
+import logo from "../../assets/images/cookchef.png";
 import { useState } from "react";
-import MobileMenu from "./MobileMenu";
+import MobileMenu from "./components/MobileMenu/MobileMenu";
 
 function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);

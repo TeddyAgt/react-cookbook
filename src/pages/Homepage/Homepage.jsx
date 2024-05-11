@@ -1,56 +1,29 @@
 import Loading from "../../components/Loading/Loading";
 import { ApiContext } from "../../context/ApiContext";
+import { useFetchData } from "../../hooks";
 import styles from "./Homepage.module.scss";
 import Recipe from "./components/Recipe/Recipe";
 import Search from "./components/Search/Search";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 function Homepage() {
-  const [recipes, setRecipes] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState("");
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(1);
   const BASE_API_URL = useContext(ApiContext);
 
-  useEffect(() => {
-    let cancel = false;
-
-    async function fetchRecipes() {
-      setIsLoading(true);
-
-      try {
-        console.log("fetch");
-        const response = await fetch(
-          `${BASE_API_URL}?skip=${pageIndex * 18}&limit=18`
-        );
-
-        if (response.ok && !cancel) {
-          const newRecipes = await response.json();
-
-          setRecipes((x) => {
-            return Array.isArray(newRecipes)
-              ? [...x, ...newRecipes]
-              : [...x, newRecipes];
-          });
-        } else {
-          console.log("Error, or cancel ===", cancel);
-        }
-      } catch (e) {
-        console.log(e);
-      } finally {
-        if (!cancel) setIsLoading(false);
-      }
-    }
-    fetchRecipes();
-    return () => {
-      cancel = true;
-    };
-  }, [BASE_API_URL, pageIndex]);
+  const [[recipes, setRecipes], isLoading] = useFetchData(
+    BASE_API_URL,
+    pageIndex
+  );
 
   function updateRecipe(recipeToUpdate) {
     setRecipes(
       recipes.map((r) => (r._id === recipeToUpdate._id ? recipeToUpdate : r))
     );
+  }
+
+  function deleteRecipe(_id) {
+    setRecipes(recipes.filter((r) => r._id !== _id));
   }
 
   return (
@@ -74,6 +47,7 @@ function Homepage() {
                   key={recipe._id}
                   recipe={recipe}
                   toggleRecipeLike={updateRecipe}
+                  deleteRecipe={deleteRecipe}
                 />
               ))}
           </div>

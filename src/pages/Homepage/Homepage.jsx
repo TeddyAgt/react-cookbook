@@ -2,6 +2,7 @@ import Loading from "../../components/Loading/Loading";
 import { ApiContext } from "../../context/ApiContext";
 import styles from "./Homepage.module.scss";
 import Recipe from "./components/Recipe/Recipe";
+import Search from "./components/Search/Search";
 import { useContext, useEffect, useState } from "react";
 
 function Homepage() {
@@ -52,11 +53,6 @@ function Homepage() {
     );
   }
 
-  function handleInputSearch(e) {
-    const filter = e.target.value;
-    setFilter(filter.trim().toLowerCase());
-  }
-
   return (
     <main className={`flex-fill container p-20 d-flex flex-column`}>
       <h1 className="my-30">
@@ -66,16 +62,7 @@ function Homepage() {
 
       <section
         className={`${styles.contentCard} flex-fill mb-20 card p-20 d-flex flex-column`}>
-        <div
-          className={`d-flex flex-row justify-content-center align-items-center my-30 ${styles.searchBar}`}>
-          <i className="fa-solid fa-magnifying-glass mr-15"></i>
-          <input
-            onInput={handleInputSearch}
-            type="text"
-            placeholder="Rechercher..."
-            className="flex-fill"
-          />
-        </div>
+        <Search setFilter={setFilter} />
         {isLoading && !recipes.length ? (
           <Loading />
         ) : (

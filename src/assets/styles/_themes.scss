@@ -28,3 +28,21 @@
 .text-primary {
   color: var(--primary);
 }
+
+input {
+  padding: 10px 15px;
+  border: 2px solid var(--grey-light);
+  border-radius: 20px;
+}
+
+label {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.form-error {
+  color: var(--red);
+  font-weight: 500;
+  font-size: 12px;
+}

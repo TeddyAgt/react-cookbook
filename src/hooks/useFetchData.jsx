@@ -15,6 +15,7 @@ export function useFetchData(url, pageIndex) {
       if (pageIndex) {
         queryParam.append("skip", (pageIndex - 1) * 18);
         queryParam.append("limit", 18);
+        queryParam.append("sort", "createdAt:-1");
       }
 
       try {

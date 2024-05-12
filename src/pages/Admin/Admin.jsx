@@ -1,11 +1,16 @@
-import styles from "./Admin.module.scss";
-import RecipeForm from "./components/RecipeForm/RecipeForm";
+import { Outlet } from "react-router-dom";
+import AdminNavigation from "./components/AdminNavigation/AdminNavigation";
+import { Suspense } from "react";
 
 function Admin() {
   return (
-    <main
-      className={`flex-fill container p-20 d-flex flex-column align-items-center p-20`}>
-      <RecipeForm />
+    <main className={`flex-fill container p-20 d-flex p-20`}>
+      <AdminNavigation />
+      <section className="d-flex-flex-column flex-fill">
+        <Suspense>
+          <Outlet />
+        </Suspense>
+      </section>
     </main>
   );
 }

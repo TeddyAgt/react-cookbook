@@ -7,7 +7,7 @@ function MobileMenu() {
       <li>Wishlist</li>
       <li>Connexion</li>
       <li>
-        <NavLink to={"admin"}>Ajouter une recette</NavLink>
+        <NavLink to={"admin"}>Admin</NavLink>
       </li>
     </ul>
   );

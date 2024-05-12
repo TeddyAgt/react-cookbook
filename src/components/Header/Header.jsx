@@ -29,7 +29,7 @@ function Header() {
         </li>
         <li>
           <NavLink to={"admin"}>
-            <button className="btn btn--primary">Ajouter une recette</button>
+            <button className="btn btn--primary">Admin</button>
           </NavLink>
         </li>
       </ul>

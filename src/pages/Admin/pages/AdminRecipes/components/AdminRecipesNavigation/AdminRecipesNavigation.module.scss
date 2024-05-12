@@ -1,0 +1,18 @@
+.adminRecipesNavigation {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+
+  a {
+    text-align: center;
+  }
+}
+
+.navLinkActive {
+  background-color: var(--primary);
+  color: white;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: color 0.2s, background-color 0.2s;
+  padding: 5px;
+}

@@ -10,7 +10,7 @@ function App() {
   return (
     <div className={`d-flex flex-column ${styles.appContainer}`}>
       <Header />
-      <div className="flex-auto">
+      <div className="flex-fill">
         <Suspense>
           <Outlet />
         </Suspense>

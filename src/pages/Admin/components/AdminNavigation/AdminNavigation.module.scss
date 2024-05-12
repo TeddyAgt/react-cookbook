@@ -1,0 +1,21 @@
+.adminNavigation {
+  background: #fff;
+  border-radius: 4px;
+  border: var(--border);
+  width: 200px;
+  padding: 20px;
+  margin-right: 20px;
+  min-height: 200px;
+
+  a {
+    padding: 5px;
+  }
+}
+
+.navLinkActive {
+  background-color: var(--primary);
+  color: white;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: color 0.2s, background-color 0.2s;
+}

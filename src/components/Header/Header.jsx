@@ -2,18 +2,20 @@ import styles from "./Header.module.scss";
 import logo from "../../assets/images/cookchef.png";
 import { useState } from "react";
 import MobileMenu from "./components/MobileMenu/MobileMenu";
+import { NavLink } from "react-router-dom";
 
-function Header({ setPage }) {
+function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   return (
     <header className={`${styles.header} d-flex align-items-center`}>
       <div className="flex-fill">
-        <img
-          onClick={() => setPage("homepage")}
-          src={logo}
-          alt=""
-        />
+        <NavLink to={"/"}>
+          <img
+            src={logo}
+            alt=""
+          />
+        </NavLink>
       </div>
       <ul className={styles.headerList}>
         <li>
@@ -26,11 +28,9 @@ function Header({ setPage }) {
           <button className="btn btn--primary mr-15">Connexion</button>
         </li>
         <li>
-          <button
-            onClick={() => setPage("admin")}
-            className="btn btn--primary">
-            Ajouter une recette
-          </button>
+          <NavLink to={"admin"}>
+            <button className="btn btn--primary">Ajouter une recette</button>
+          </NavLink>
         </li>
       </ul>
 
@@ -43,7 +43,7 @@ function Header({ setPage }) {
           <div
             onClick={() => setShowMobileMenu(!showMobileMenu)}
             className="calc"></div>
-          <MobileMenu setPage={setPage} />
+          <MobileMenu />
         </>
       )}
     </header>

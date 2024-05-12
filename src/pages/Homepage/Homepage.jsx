@@ -1,29 +1,33 @@
+import { useState } from "react";
 import Loading from "../../components/Loading/Loading";
-import { ApiContext } from "../../context/ApiContext";
-import { useFetchData } from "../../hooks";
+import { useFetchRecipes } from "../../hooks";
 import styles from "./Homepage.module.scss";
 import Recipe from "./components/Recipe/Recipe";
 import Search from "./components/Search/Search";
-import { useContext, useState } from "react";
+import {
+  updateRecipe as updateRecipeOnApi,
+  deleteRecipe as deleteRecipeOnApi,
+} from "../../API";
 
 function Homepage() {
   const [filter, setFilter] = useState("");
   const [pageIndex, setPageIndex] = useState(1);
-  const BASE_API_URL = useContext(ApiContext);
 
-  const [[recipes, setRecipes], isLoading] = useFetchData(
-    BASE_API_URL,
-    pageIndex
-  );
+  const [[recipes, setRecipes], isLoading] = useFetchRecipes(pageIndex);
 
-  function updateRecipe(recipeToUpdate) {
+  async function updateRecipe(recipeToUpdate) {
+    const savedRecipe = await updateRecipeOnApi(recipeToUpdate);
     setRecipes(
-      recipes.map((r) => (r._id === recipeToUpdate._id ? recipeToUpdate : r))
+      recipes.map((r) => (r._id === savedRecipe._id ? savedRecipe : r))
     );
   }
 
-  function deleteRecipe(_id) {
-    setRecipes(recipes.filter((r) => r._id !== _id));
+  async function deleteRecipe(_id) {
+    if (await deleteRecipeOnApi(_id)) {
+      setRecipes(recipes.filter((r) => r._id !== _id));
+    } else {
+      throw new Error("La suppression a échouée");
+    }
   }
 
   return (
@@ -46,7 +50,7 @@ function Homepage() {
                 <Recipe
                   key={recipe._id}
                   recipe={recipe}
-                  toggleRecipeLike={updateRecipe}
+                  updateRecipe={updateRecipe}
                   deleteRecipe={deleteRecipe}
                 />
               ))}

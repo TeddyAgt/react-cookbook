@@ -1,51 +1,16 @@
-import { useContext } from "react";
 import styles from "./Recipe.module.scss";
-import { ApiContext } from "../../../../context/ApiContext";
 
-function Recipe({
-  recipe: { _id, title, image, liked },
-  toggleRecipeLike,
-  deleteRecipe,
-}) {
-  const BASE_API_URL = useContext(ApiContext);
-
-  async function handleClickLikeRecipe() {
-    try {
-      const response = await fetch(`${BASE_API_URL}/${_id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          liked: !liked,
-        }),
-      });
-
-      if (response.ok) {
-        const updatedRecipe = await response.json();
-        toggleRecipeLike(updatedRecipe);
-      } else {
-        console.log("Error");
-      }
-    } catch (e) {
-      console.log(e);
-    }
+function Recipe({ recipe: recipe, updateRecipe, deleteRecipe }) {
+  function handleClickLikeRecipe() {
+    updateRecipe({
+      ...recipe,
+      liked: !recipe.liked,
+    });
   }
 
-  async function handleClickDeleteRecipe(e) {
+  function handleClickDeleteRecipe(e) {
     e.stopPropagation();
-
-    try {
-      const response = await fetch(`${BASE_API_URL}/${_id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        deleteRecipe(_id);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    deleteRecipe(recipe._id);
   }
 
   return (
@@ -58,13 +23,16 @@ function Recipe({
 
       <div className={styles.imageContainer}>
         <img
-          src={image}
+          src={recipe.image}
           alt=""
         />
       </div>
       <div className={`${styles.recipeTitle} flex-center flex-column`}>
-        <h3 className="mb-10">{title}</h3>
-        <i className={`fa-solid fa-heart ${liked ? "text-primary" : ""}`}></i>
+        <h3 className="mb-10">{recipe.title}</h3>
+        <i
+          className={`fa-solid fa-heart ${
+            recipe.liked ? "text-primary" : ""
+          }`}></i>
       </div>
     </article>
   );

@@ -1,6 +1,7 @@
 import { useFetchRecipes } from "../../../../../../hooks";
 import styles from "./AdminRecipesList.module.scss";
 import { deleteRecipe } from "../../../../../../API";
+import { NavLink } from "react-router-dom";
 
 function AdminRecipesList() {
   const [[recipes, setRecipes]] = useFetchRecipes();
@@ -21,7 +22,9 @@ function AdminRecipesList() {
             key={r._id}
             className="d-flex align-items-center">
             <span className="flex-fill">{r.title}</span>
-            <button className="btn btn--reverse-primary mr-15">Éditer</button>
+            <NavLink to={`../edit/${r._id}`}>
+              <button className="btn btn--reverse-primary mr-15">Éditer</button>
+            </NavLink>
             <button
               onClick={() => handleClickDelete(r._id)}
               className="btn btn--danger">

@@ -21,12 +21,14 @@ export function useFetchRecipes(pageIndex) {
         queryParam.append("sort", "createdAt:-1");
       }
 
-      console.log(queryParam);
-
       try {
         const fetchedRecipes = await getRecipes(queryParam);
         if (!cancel) {
-          setRecipes((x) => [...x, ...fetchedRecipes]);
+          if (pageIndex && pageIndex !== 1) {
+            setRecipes((x) => [...x, ...fetchedRecipes]);
+          } else {
+            setRecipes(fetchedRecipes);
+          }
         }
       } catch (e) {
         console.log(e);

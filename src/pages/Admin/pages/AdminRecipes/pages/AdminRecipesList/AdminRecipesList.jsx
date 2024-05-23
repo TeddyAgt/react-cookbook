@@ -2,9 +2,12 @@ import { useFetchRecipes } from "../../../../../../hooks";
 import styles from "./AdminRecipesList.module.scss";
 import { deleteRecipe } from "../../../../../../API";
 import { NavLink } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { recipesState } from "src/state";
 
 function AdminRecipesList() {
-  const [[recipes, setRecipes]] = useFetchRecipes();
+  useFetchRecipes();
+  const [recipes, setRecipes] = useRecoilState(recipesState);
 
   async function handleClickDelete(_id) {
     if (await deleteRecipe(_id)) {

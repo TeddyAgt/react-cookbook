@@ -3,9 +3,12 @@ import logo from "../../assets/images/cookchef.png";
 import { useState } from "react";
 import MobileMenu from "./components/MobileMenu/MobileMenu";
 import { NavLink } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { wishlistDisplayState } from "src/state";
 
 function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const setWishlistDisplay = useSetRecoilState(wishlistDisplayState);
 
   return (
     <header className={`${styles.header} d-flex align-items-center`}>
@@ -19,7 +22,11 @@ function Header() {
       </div>
       <ul className={styles.headerList}>
         <li>
-          <button className="mr-15 btn btn--reverse-primary">
+          <button
+            onClick={() => {
+              setWishlistDisplay(true);
+            }}
+            className="mr-15 btn btn--reverse-primary">
             <i className="fa-solid fa-heart mr-5"></i>
             <span>Wishlist</span>
           </button>

@@ -42,7 +42,7 @@ function Homepage() {
   return (
     <>
       <main className={`flex-fill container p-20 d-flex flex-column`}>
-        <h1 className="my-30">
+        <h1 className={`my-30 ${styles.title}`}>
           Découvrez nos nouvelles recettes{" "}
           <small className="styles.small"> - {recipes.length}</small>
         </h1>

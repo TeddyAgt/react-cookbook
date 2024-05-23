@@ -1,3 +1,5 @@
+@use "src/assets/styles/mixins" as mixins;
+
 .container {
   position: fixed;
   display: flex;
@@ -22,6 +24,12 @@
   border: var(--border);
   overflow-y: auto;
   animation: appear 0.2s;
+
+  @include mixins.xs {
+    width: 100%;
+    margin-bottom: 0;
+    margin-right: 0;
+  }
 }
 
 .remove {

@@ -1,4 +1,4 @@
-@use "../../assets/styles/mixins" as *;
+@use "src/assets/styles/mixins" as *;
 
 .grid {
   display: grid;
@@ -27,4 +27,11 @@
 .small {
   font-size: 14px;
   font-weight: 700;
+}
+
+.title {
+  @include xs {
+    font-size: 18px;
+    margin-top: 10px;
+  }
 }

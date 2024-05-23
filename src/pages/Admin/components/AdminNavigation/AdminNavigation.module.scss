@@ -1,3 +1,5 @@
+@use "src/assets/styles/mixins" as mixins;
+
 .adminNavigation {
   background: #fff;
   border-radius: 4px;
@@ -9,6 +11,13 @@
 
   a {
     padding: 5px;
+  }
+
+  @include mixins.xs {
+    flex: 0 0 auto;
+    min-height: 0;
+    margin-bottom: 20px;
+    width: 100%;
   }
 }
 

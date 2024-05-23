@@ -1,0 +1,7 @@
+@use "src/assets/styles/mixins" as mixins;
+
+.container {
+  @include mixins.xs {
+    flex-direction: column;
+  }
+}

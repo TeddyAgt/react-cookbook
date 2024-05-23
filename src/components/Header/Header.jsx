@@ -2,13 +2,14 @@ import styles from "./Header.module.scss";
 import logo from "../../assets/images/cookchef.png";
 import { useState } from "react";
 import MobileMenu from "./components/MobileMenu/MobileMenu";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { wishlistDisplayState } from "src/state";
 
 function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const setWishlistDisplay = useSetRecoilState(wishlistDisplayState);
+  const location = useLocation();
 
   return (
     <header className={`${styles.header} d-flex align-items-center`}>
@@ -22,17 +23,16 @@ function Header() {
       </div>
       <ul className={styles.headerList}>
         <li>
-          <button
-            onClick={() => {
-              setWishlistDisplay(true);
-            }}
-            className="mr-15 btn btn--reverse-primary">
-            <i className="fa-solid fa-heart mr-5"></i>
-            <span>Wishlist</span>
-          </button>
-        </li>
-        <li>
-          <button className="btn btn--primary mr-15">Connexion</button>
+          {!location.pathname.includes("admin") && (
+            <button
+              onClick={() => {
+                setWishlistDisplay(true);
+              }}
+              className="mr-15 btn btn--reverse-primary">
+              <i className="fa-solid fa-heart mr-5"></i>
+              <span>Wishlist</span>
+            </button>
+          )}
         </li>
         <li>
           <NavLink to={"admin"}>
@@ -50,7 +50,10 @@ function Header() {
           <div
             onClick={() => setShowMobileMenu(!showMobileMenu)}
             className="calc"></div>
-          <MobileMenu />
+          <MobileMenu
+            displayWishList={() => setWishlistDisplay(true)}
+            hideMenu={() => setShowMobileMenu(!showMobileMenu)}
+          />
         </>
       )}
     </header>

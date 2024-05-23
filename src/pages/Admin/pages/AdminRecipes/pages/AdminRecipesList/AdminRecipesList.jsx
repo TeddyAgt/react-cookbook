@@ -23,7 +23,7 @@ function AdminRecipesList() {
         recipes.map((r) => (
           <li
             key={r._id}
-            className="d-flex align-items-center">
+            className={`d-flex align-items-center ${styles.li}`}>
             <span className="flex-fill">{r.title}</span>
             <NavLink to={`../edit/${r._id}`}>
               <button className="btn btn--reverse-primary mr-15">Éditer</button>

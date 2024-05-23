@@ -8,12 +8,16 @@ import {
   updateRecipe as updateRecipeOnApi,
   deleteRecipe as deleteRecipeOnApi,
 } from "../../API";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { recipesState, selectFilteredRecipes } from "src/state";
 
 function Homepage() {
   const [filter, setFilter] = useState("");
   const [pageIndex, setPageIndex] = useState(1);
-
-  const [[recipes, setRecipes], isLoading] = useFetchRecipes(pageIndex);
+  const [isLoading] = useFetchRecipes(pageIndex);
+  //  = useFetchRecipes(pageIndex);
+  const recipes = useRecoilValue(selectFilteredRecipes(filter));
+  const setRecipes = useSetRecoilState(recipesState);
 
   async function updateRecipe(recipeToUpdate) {
     const savedRecipe = await updateRecipeOnApi(recipeToUpdate);

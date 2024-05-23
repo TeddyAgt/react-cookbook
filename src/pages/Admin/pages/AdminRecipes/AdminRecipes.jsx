@@ -1,8 +1,9 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import AdminRecipesNavigation from "./components/AdminRecipesNavigation/AdminRecipesNavigation";
 import { Suspense } from "react";
 
 function AdminRecipes() {
+  const { key } = useLocation();
   return (
     <section className="flex flex-column">
       <h1
@@ -16,7 +17,7 @@ function AdminRecipes() {
 
         <article className="flex-fill d-flex flex-column">
           <Suspense>
-            <Outlet />
+            <Outlet key={key} />
           </Suspense>
         </article>
       </div>

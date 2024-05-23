@@ -1,0 +1,9 @@
+{
+  // Pour réparer les auto imports
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["./src/*"]
+    }
+  }
+}

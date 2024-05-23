@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Loading from "../../components/Loading/Loading";
+import Loading from "src/components/Loading/Loading";
 import { useFetchRecipes } from "../../hooks";
 import styles from "./Homepage.module.scss";
 import Recipe from "./components/Recipe/Recipe";

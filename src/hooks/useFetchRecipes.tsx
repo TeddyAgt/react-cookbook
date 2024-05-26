@@ -3,7 +3,7 @@ import { getRecipes } from "../API";
 import { useSetRecoilState } from "recoil";
 import { recipesState } from "src/state";
 
-export function useFetchRecipes(pageIndex) {
+export function useFetchRecipes(pageIndex?: number): [boolean, string] {
   const setRecipes = useSetRecoilState(recipesState);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -16,8 +16,8 @@ export function useFetchRecipes(pageIndex) {
       const queryParam = new URLSearchParams();
 
       if (pageIndex) {
-        queryParam.append("skip", (pageIndex - 1) * 6);
-        queryParam.append("limit", 6);
+        queryParam.append("skip", `${(pageIndex - 1) * 6}`);
+        queryParam.append("limit", `${6}`);
         queryParam.append("sort", "createdAt:-1");
       }
 

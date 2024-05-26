@@ -1,7 +1,13 @@
 import { NavLink } from "react-router-dom";
 import styles from "./MobileMenu.module.scss";
 
-function MobileMenu({ displayWishList, hideMenu }) {
+function MobileMenu({
+  displayWishList,
+  hideMenu,
+}: {
+  displayWishList: () => void;
+  hideMenu: () => void;
+}) {
   return (
     <ul
       onClick={hideMenu}

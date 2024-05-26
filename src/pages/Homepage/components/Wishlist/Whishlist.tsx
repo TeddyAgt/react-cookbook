@@ -7,6 +7,7 @@ import {
 } from "src/state";
 import { updateRecipe } from "src/API";
 import { useState } from "react";
+import { RecipeI } from "src/interfaces";
 
 function Wishlist() {
   const setWishlistDisplay = useSetRecoilState(wishlistDisplayState);
@@ -14,7 +15,7 @@ function Wishlist() {
   const setRecipes = useSetRecoilState(recipesState);
   const [remove, setRemove] = useState(false);
 
-  async function handleClick(recipe) {
+  async function handleClick(recipe: RecipeI) {
     const updatedRecipe = await updateRecipe({ ...recipe, liked: false });
     setRecipes((oldRecipes) =>
       oldRecipes.map((or) =>

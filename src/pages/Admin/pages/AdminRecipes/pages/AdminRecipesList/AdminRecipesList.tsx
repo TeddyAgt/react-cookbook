@@ -4,12 +4,13 @@ import { deleteRecipe } from "../../../../../../API";
 import { NavLink } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { recipesState } from "src/state";
+import { ObjectId } from "src/types";
 
 function AdminRecipesList() {
   useFetchRecipes();
   const [recipes, setRecipes] = useRecoilState(recipesState);
 
-  async function handleClickDelete(_id) {
+  async function handleClickDelete(_id: ObjectId): Promise<void> {
     if (await deleteRecipe(_id)) {
       setRecipes(recipes.filter((r) => r._id !== _id));
     } else {

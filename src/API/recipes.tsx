@@ -1,7 +1,12 @@
+import { RecipeI } from "src/interfaces";
+import { ObjectId } from "src/types";
+
 const RECIPE_API_URL = "https://restapi.fr/api/tagt_recipes";
 
 // Récupérer les recettes par lot de 18
-export async function getRecipes(queryParams = "") {
+export async function getRecipes(
+  queryParams?: URLSearchParams
+): Promise<RecipeI[]> {
   const response = await fetch(`${RECIPE_API_URL}/?${queryParams}`);
 
   if (response.ok) {
@@ -13,7 +18,7 @@ export async function getRecipes(queryParams = "") {
 }
 
 // Récupérer une recette
-export async function getRecipe(_id) {
+export async function getRecipe(_id: ObjectId): Promise<RecipeI> {
   const response = await fetch(`${RECIPE_API_URL}/${_id}`);
 
   if (response.ok) {
@@ -24,7 +29,9 @@ export async function getRecipe(_id) {
 }
 
 // Créer une recette
-export async function createRecipe(newRecipe) {
+export async function createRecipe(
+  newRecipe: Partial<RecipeI>
+): Promise<RecipeI> {
   const response = await fetch(RECIPE_API_URL, {
     method: "POST",
     headers: {
@@ -41,7 +48,9 @@ export async function createRecipe(newRecipe) {
 }
 
 // Modifier une recette
-export async function updateRecipe(recipeToUpdate) {
+export async function updateRecipe(
+  recipeToUpdate: Partial<RecipeI>
+): Promise<RecipeI> {
   const { _id, ...RecipeWithoutId } = recipeToUpdate;
 
   const response = await fetch(`${RECIPE_API_URL}/${_id}`, {
@@ -60,7 +69,7 @@ export async function updateRecipe(recipeToUpdate) {
 }
 
 // Supprimer une recette
-export async function deleteRecipe(_id) {
+export async function deleteRecipe(_id: ObjectId): Promise<ObjectId> {
   const response = await fetch(`${RECIPE_API_URL}/${_id}`, {
     method: "DELETE",
   });

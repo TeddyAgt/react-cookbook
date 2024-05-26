@@ -6,6 +6,7 @@ import { createRecipe, updateRecipe } from "../../../../../../API";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { selectActiveRecipe } from "src/state";
+import { RecipeI } from "src/interfaces";
 
 function AdminRecipeForm() {
   const { recipeId } = useParams();
@@ -14,6 +15,7 @@ function AdminRecipeForm() {
   const defaultValues = {
     title: recipe ? recipe.title : "",
     image: recipe ? recipe.image : "",
+    generic: "",
   };
 
   const recipeSchema = yup.object({
@@ -38,7 +40,7 @@ function AdminRecipeForm() {
     clearErrors,
   } = useForm({ defaultValues, resolver: yupResolver(recipeSchema) });
 
-  async function handleSubmitForm(values) {
+  async function handleSubmitForm(values: Partial<RecipeI>) {
     clearErrors();
 
     try {

@@ -1,6 +1,17 @@
+import { RecipeI } from "src/interfaces";
 import styles from "./Recipe.module.scss";
+import { ObjectId } from "src/types";
+import { MouseEvent } from "react";
 
-function Recipe({ recipe: recipe, updateRecipe, deleteRecipe }) {
+function Recipe({
+  recipe,
+  updateRecipe,
+  deleteRecipe,
+}: {
+  recipe: RecipeI;
+  updateRecipe: (x: RecipeI) => Promise<void>;
+  deleteRecipe: (x: ObjectId) => Promise<void>;
+}) {
   function handleClickLikeRecipe() {
     updateRecipe({
       ...recipe,
@@ -8,7 +19,7 @@ function Recipe({ recipe: recipe, updateRecipe, deleteRecipe }) {
     });
   }
 
-  function handleClickDeleteRecipe(e) {
+  function handleClickDeleteRecipe(e: MouseEvent<HTMLElement>) {
     e.stopPropagation();
     deleteRecipe(recipe._id);
   }
